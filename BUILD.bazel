@@ -9,12 +9,10 @@ go_library(
     srcs = [
         "simple.go",
     ],
-    importpath = "github.com/jasonmkurtz/bazel101",
-    deps = [
-    ],
+    importpath = "github.com/jasonmkurtz/bazel101"
 )
 
 go_binary(
     name = "simple-bazel",
-    deps = [":simple"],
+    embed = [":simple"],
 )
