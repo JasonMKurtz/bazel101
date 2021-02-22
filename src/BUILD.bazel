@@ -1,19 +1,22 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
-# gazelle:prefix github.com/jasonmkurtz/bazel101/src
+# gazelle:prefix github.com/jasonmkurtz/bazel101
 gazelle(name = "gazelle")
 
-go_binary(
-    name = "simple-bazel",
-    embed = [":src_lib"],
-    visibility = ["//visibility:public"],
+go_library(
+    name = "bazel101_lib",
+    srcs = ["simple.go"],
+    importpath = "github.com/jasonmkurtz/bazel101",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//src/b",
+        "//src/c",
+    ],
 )
 
-go_library(
-    name = "src_lib",
-    srcs = ["simple.go"],
-    importpath = "github.com/jasonmkurtz/bazel101/src",
-    visibility = ["//visibility:private"],
-    deps = ["@com_github_jasonmkurtz_bazel101//:go_default_library"],
+go_binary(
+    name = "simple",
+    embed = [":bazel101_lib"],
+    visibility = ["//visibility:public"],
 )
