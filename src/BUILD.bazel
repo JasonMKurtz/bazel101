@@ -6,16 +6,16 @@ gazelle(name = "gazelle")
 
 go_library(
     name = "simple",
-    srcs = [
-        "simple.go",
-    ],
+    srcs = ["simple.go"],
+    importpath = "github.com/jasonmkurtz/bazel101",
+    visibility = ["//visibility:private"],
     deps = [
-        "//b:b"
+        "@com_github_jasonmkurtz_bazel101//src/b:go_default_library",
     ],
-    importpath = "github.com/jasonmkurtz/bazel101"
 )
 
 go_binary(
     name = "simple-bazel",
     embed = [":simple"],
+    visibility = ["//visibility:public"],
 )
