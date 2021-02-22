@@ -1,8 +1,12 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/jasonmkurtz/bazel101/src/b
+gazelle(name = "gazelle")
 
 go_library(
     name = "b",
     srcs = ["b.go"],
-    importpath = "github.com/jasonmkurtz/bazel101/b",
+    importpath = "github.com/jasonmkurtz/bazel101/src/b",
     visibility = ["//visibility:public"],
 )
