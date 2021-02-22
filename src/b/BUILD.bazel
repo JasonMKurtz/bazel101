@@ -4,6 +4,6 @@ go_library(
     srcs = [
         "b.go",
     ],
-    importpath = "github.com/jasonmkurtz/bazel101",
+    importpath = "github.com/jasonmkurtz/bazel101/src/b",
     visibility = ["//visibility:public"]
 )

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	b "./b"
+	b "github.com/jasonmkurtz/bazel101"
 )
 
 func main() {
