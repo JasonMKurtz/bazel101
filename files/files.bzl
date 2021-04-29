@@ -10,7 +10,7 @@ def _append_file_impl(ctx):
     )
 
 def _count_file_impl(ctx):
-    data = ctx.attr.file_target.files.to_list()[0]
+    data = ctx.file.file_target
     out = ctx.actions.declare_file("size")
     
     ctx.actions.run_shell(
@@ -37,6 +37,8 @@ append_file = rule(
 count_file = rule(
     implementation = _count_file_impl,
     attrs = {
-        'file_target': attr.label(),
+        'file_target': attr.label(
+            allow_single_file = [".txt"],
+        ),
     },
 )
