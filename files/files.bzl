@@ -55,8 +55,8 @@ def _count_file_impl(ctx):
         outputs = [out],
     )
 
-    return struct(
-        size = out,
+    return DefaultInfo(
+        files = depset([out])
     )
 
 
