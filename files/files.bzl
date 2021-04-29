@@ -48,10 +48,10 @@ def _count_file_impl(ctx):
     out = ctx.actions.declare_file("size")
     
     print(data)
-    print(data.hashout.path)
+    print(data.fh.root)
     ctx.actions.run_shell(
         command = "wc -l {} > {}".format(data.fh.path, out.path),
-        inputs = [data.hashout],
+        inputs = [data.fh],
         outputs = [out],
     )
 

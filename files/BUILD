@@ -2,8 +2,8 @@ load(":files.bzl", "append_file", "count_file")
 
 append_file(
     name = "append",
-    file = "hello2.txt",
-    text = "11",
+    file = "test_2.txt",
+    text = "2",
 )
 
 count_file(
