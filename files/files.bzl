@@ -29,12 +29,18 @@ def _append_file_impl(ctx):
         content = ctx.attr.text,
     )
 
-    return FileWriteProvider(
+    info = DefaultInfo(
+        files = depset([data, hashout]),
+    )
+
+    metadata = FileWriteProvider(
         hashout = hashout,
         filename = ctx.attr.file,
         content = ctx.attr.text,
         fh = data,
     )
+
+    return [info, metadata]
 
 def _count_file_impl(ctx):
     data = ctx.attr.file_target[FileWriteProvider] # the data from the above struct
