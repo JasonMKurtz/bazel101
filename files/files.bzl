@@ -1,9 +1,10 @@
 FileWriteProvider = provider(
     "A rule provider to pass the hash information along",
     fields = {
-        "hash": "The hash in question.",
+        "hashout": "The file object of the file with our hash.",
         "filename": "The filename we wrote to.",
         "content": "The content we wrote.",
+        "fh": "The file object of the file we wrote to.",
     },
 )
 
@@ -16,16 +17,23 @@ def _append_file_impl(ctx):
     )
     """
 
-    hashout = ctx.actions.declare_file("hash.txt")
+    hashout = ctx.actions.declare_file("{}".format(hash(ctx.attr.text)))
     ctx.actions.write(
         output = hashout,
-        content = "{}".format(hash(ctx.attr.text)),
+        content = ctx.attr.text,
+    )
+
+    data = ctx.actions.declare_file(ctx.attr.file)
+    ctx.actions.write(
+        output = data,
+        content = ctx.attr.text,
     )
 
     return FileWriteProvider(
-        hash = hash(ctx.attr.text),
+        hashout = hashout,
         filename = ctx.attr.file,
         content = ctx.attr.text,
+        fh = data,
     )
 
 def _count_file_impl(ctx):
@@ -33,9 +41,11 @@ def _count_file_impl(ctx):
 
     out = ctx.actions.declare_file("size")
     
+    print(data)
+    print(data.hashout.path)
     ctx.actions.run_shell(
-        command = "wc -l {} > {}".format(data.filename, out.path),
-        inputs = [data.filename, data.content],
+        command = "wc -l {} > {}".format(data.fh.path, out.path),
+        inputs = [data.hashout],
         outputs = [out],
     )
 
